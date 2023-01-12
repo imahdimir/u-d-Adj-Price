@@ -4,8 +4,6 @@
 
 from pathlib import Path
 
-import pandas as pd
-
 import _0_get_adj_prices
 import _1_data_cleaning
 import _2_upload_data_on_github
