@@ -1,5 +1,8 @@
+# Python 3.10.5
+# Apple M1 Arm64
+
 pandas~=1.5.1
 persiantools~=3.0.1
 requests~=2.28.1
 githubdata~=12.1.1
-mirutil~=21.1.0
+mirutil~=21.2.0
