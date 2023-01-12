@@ -8,7 +8,7 @@ import pandas as pd
 from persiantools.jdatetime import JalaliDateTime
 
 import ns
-from _0_get_adj_prices import ColName as PCN, tfp
+from _0_get_adj_prices import ColName as PCN , tfp
 
 gdu = ns.GDU()
 c = ns.Col()
@@ -83,6 +83,12 @@ def main() :
     ##
     tod_date = JalaliDateTime.today().strftime('%Y-%m-%d')
     dfp[cn.get_date] = tod_date
+
+    ##
+    msk = dfp.duplicated(subset = [c.ftic , c.d] , keep = False)
+    df1 = dfp[msk]
+
+    assert df1.empty
 
     ##
     col_ord = {
