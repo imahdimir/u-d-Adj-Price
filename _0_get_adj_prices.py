@@ -16,6 +16,8 @@ import ns
 gdu = ns.GDU()
 c = ns.Col()
 
+tfp = Path('temp.prq')
+
 class Const :
     price_url = 'https://members.tsetmc.com/tsev2/chart/data/Financial.aspx?i={}&t=ph&a={}'
     headers = {
@@ -73,7 +75,7 @@ def main() :
         # break
 
     ##
-    dfi.to_parquet('temp.prq' , index = False)
+    dfi.to_parquet(tfp , index = False)
 
     ##
     gdi.rmdir()

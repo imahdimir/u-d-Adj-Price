@@ -2,20 +2,21 @@
 
     """
 
-import time
 from pathlib import Path
 
 import pandas as pd
 from persiantools.jdatetime import JalaliDateTime
 
 import ns
-from _0_get_adj_prices import ColName as PCN
+from _0_get_adj_prices import ColName as PCN, tfp
 
 gdu = ns.GDU()
 c = ns.Col()
 
+fps = Path('Adj-Prices.prq')
+
 class ColName(PCN) :
-    get_date = 'GetDate'
+    get_date = 'GetJDate'
 
 cn = ColName()
 
@@ -27,7 +28,7 @@ def main() :
     pass
 
     ##
-    dfi = pd.read_parquet('temp.prq')
+    dfi = pd.read_parquet(tfp)
 
     ##
     dfp = pd.DataFrame()
@@ -80,7 +81,7 @@ def main() :
     dfp[c.d] = dfp[c.d].apply(lambda x : x.strftime('%Y-%m-%d'))
 
     ##
-    tod_date = time.strftime('%Y-%m-%d')
+    tod_date = JalaliDateTime.today().strftime('%Y-%m-%d')
     dfp[cn.get_date] = tod_date
 
     ##
@@ -101,7 +102,7 @@ def main() :
     dfp = dfp[col_ord.keys()]
 
     ##
-    dfp.to_parquet('Adj-Prices.prq' , index = False)
+    dfp.to_parquet(fps , index = False)
 
 ##
 
@@ -109,13 +110,3 @@ def main() :
 if __name__ == "__main__" :
     main()
     print(f'{Path(__file__).name} Done!')
-
-##
-
-# noinspection PyUnreachableCode
-if False :
-    pass
-
-    ##
-
-##
