@@ -5,6 +5,8 @@
 import shutil
 from pathlib import Path
 
+import pandas as pd
+
 import ns
 from githubdata import GitHubDataRepo
 from mirutil.ns import rm_ns_module
@@ -54,3 +56,14 @@ def main() :
 if __name__ == "__main__" :
     main()
     print(f'{Path(__file__).name} Done!')
+
+##
+if False :
+    pass
+
+    ##
+    fp = '/Users/mahdi/Dropbox/GitHub/u-d-Adj-Prices/d-Adj-Prices/Adj-Prices-1401-10-21.prq'
+
+    df = pd.read_parquet(fp)
+
+    ##
