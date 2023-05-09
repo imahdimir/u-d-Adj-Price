@@ -57,17 +57,18 @@ def main() :
         msk = dfi[cn.res_txt].isna()
         msk |= dfi[cn.res_txt].eq('')
 
-        df1 = dfi[msk]
-        print('empty ones:' , len(df1))
-        if df1.empty :
+        _df = dfi[msk]
+        print('empty ones:' , len(_df))
+        if _df.empty :
             break
 
-        for ind , ro in dfi.iterrows() :
+        for indx , ro in dfi.iterrows() :
             if not (pd.isna(ro[cn.res_txt]) or ro[cn.res_txt] == '') :
                 continue
 
             r = requests.get(ro[cn.url] , headers = cte.headers)
-            dfi.loc[ind , cn.res_txt] = r.text
+
+            dfi.loc[indx , cn.res_txt] = r.text
             print(ro[c.ftic] , r.text[:30])
 
             time.sleep(.5)
