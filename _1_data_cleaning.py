@@ -8,7 +8,8 @@ import pandas as pd
 from persiantools.jdatetime import JalaliDateTime
 
 import ns
-from _0_get_adj_prices import ColName as PCN , tfp
+from _0_get_adj_prices import ColName as PCN
+from _0_get_adj_prices import tfp
 
 gdu = ns.GDU()
 c = ns.Col()

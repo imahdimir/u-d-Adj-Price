@@ -5,13 +5,11 @@
 import shutil
 from pathlib import Path
 
-import pandas as pd
-
-import ns
 from githubdata import GitHubDataRepo
 from mirutil.ns import rm_ns_module
 from persiantools.jdatetime import JalaliDateTime
 
+import ns
 from _0_get_adj_prices import tfp
 from _1_data_cleaning import fps
 
