@@ -4,9 +4,9 @@
 
 from pathlib import Path
 
-import _0_get_adj_prices
-import _1_data_cleaning
-import _2_upload_data_on_github
+from modules import _0_get_adj_prices
+from modules import _1_data_cleaning
+from modules import _2_upload_data_on_github
 
 def main() :
     pass
