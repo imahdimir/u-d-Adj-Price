@@ -2,27 +2,51 @@
 
     """
 
-from pathlib import Path
+from namespace_mahdimir import tse as tse_ns
+from namespace_mahdimir import tse_github_data_url as tgdu
+from run_py import DefaultDirs
+from run_py import rm_cache_dirs
+from run_py import run_modules
 
-from modules import _0_get_adj_prices
-from modules import _1_data_cleaning
-from modules import _2_upload_data_on_github
+# namespace
+c = tse_ns.Col()
+
+class GDU :
+    g = tgdu.GitHubDataUrl()
+
+    adj_price_t = g.adj_price
+
+    slf = tgdu.m + 'u-' + adj_price_t
+
+class Dirs :
+    dd = DefaultDirs()
+
+    gd = dd.gd
+    t = dd.t
+
+class FPN :
+    dyr = Dirs()
+
+    # temp data files
+    t0 = dyr.t / 't0.prq'
+
+class ColName :
+    pass
+
+# class instances   %%%%%
+gdu = GDU()
+dyr = Dirs()
+fpn = FPN()
+cn = ColName()
 
 def main() :
     pass
-
     ##
-    _0_get_adj_prices.main()
-
+    run_modules()
     ##
-    _1_data_cleaning.main()
-
-    ##
-    _2_upload_data_on_github.main()
+    rm_cache_dirs()
 
 ##
-
-
 if __name__ == "__main__" :
     main()
-    print(f'{Path(__file__).name} Done!')
+    print('\n\n\t\t***** main.py Done! *****\n\n')

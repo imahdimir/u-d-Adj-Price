@@ -10,11 +10,7 @@ import requests
 from githubdata import GitHubDataRepo
 from mirutil.ns import update_ns_module
 
-update_ns_module()
-import ns
-
-gdu = ns.GDU()
-c = ns.Col()
+from main import c , gdu , dyr
 
 tfp = Path('temp.prq')
 
@@ -82,8 +78,6 @@ def main() :
     gdi.rmdir()
 
 ##
-
-
 if __name__ == "__main__" :
     main()
-    print(f'{Path(__file__).name} Done!')
+    print('\n' , f' *** {Path(__file__).name} Done! *** ' , '\n')
