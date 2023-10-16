@@ -8,9 +8,6 @@ from run_py import DefaultDirs
 from run_py import rm_cache_dirs
 from run_py import run_modules
 
-# namespace
-c = tse_ns.Col()
-
 class GDU :
     g = tgdu.GitHubDataUrl()
 
@@ -18,31 +15,40 @@ class GDU :
 
     slf = tgdu.m + 'u-' + adj_price_t
 
+    id_2_ftic_s = g.id_2_ftic
+
 class Dirs :
-    dd = DefaultDirs()
+    dd = DefaultDirs(make_default_dirs = True)
 
     gd = dd.gd
     t = dd.t
 
-class FPN :
+class FPs :
     dyr = Dirs()
 
     # temp data files
     t0 = dyr.t / 't0.prq'
+    t1_0 = dyr.t / 't1_0.prq'
+    t1_1 = dyr.t / 't1_1.prq'
 
 class ColName :
-    pass
+    url = 'url'
+    res_txt = 'res_text'
 
 # class instances   %%%%%
+c = tse_ns.Col()
+
 gdu = GDU()
 dyr = Dirs()
-fpn = FPN()
+fp = FPs()
 cn = ColName()
 
 def main() :
     pass
+
     ##
     run_modules()
+
     ##
     rm_cache_dirs()
 

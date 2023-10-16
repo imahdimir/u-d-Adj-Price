@@ -3,81 +3,69 @@
     """
 
 import time
-from pathlib import Path
 
-import pandas as pd
 import requests
-from githubdata import GitHubDataRepo
-from mirutil.ns import update_ns_module
+from githubdata import get_data_wo_double_clone
+from mirutil.const import Const
+from mirutil.df import save_df_as_prq
 
-from main import c , gdu , dyr
+from main import c
+from main import cn
+from main import fp
+from main import gdu
 
-tfp = Path('temp.prq')
+k = Const()
 
-class Const :
-    price_url = 'https://members.tsetmc.com/tsev2/chart/data/Financial.aspx?i={}&t=ph&a={}'
-    headers = {
-            'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'
-            }
-
-cte = Const()
-
-class ColName :
-    url = 'url'
-    res_txt = 'res_text'
-
-cn = ColName()
+def get_all_stock_ids() :
+    return get_data_wo_double_clone(gdu.id_2_ftic_s)
 
 def make_adjusted_price_url(id) :
-    return cte.price_url.format(id , 1)
+    url_fmt = 'https://members.tsetmc.com/tsev2/chart/data/Financial.aspx?i={}&t=ph&a={}'
+    return url_fmt.format(id , 1)
+
+def get_adj_prices(df) :
+    # this should be done in async and maybe for remained ones do it sync, \TODO
+    msk = df[cn.res_txt].isna()
+    msk |= df[cn.res_txt].eq('')
+
+    _df = df[msk]
+    print('empty ones:' , len(_df))
+    if _df.empty :
+        return df
+
+    for indx , ro in _df.iterrows() :
+        r = requests.get(ro[cn.url] , headers = k.headers)
+
+        df.loc[indx , cn.res_txt] = r.text
+        print(ro[c.ftic] , r.text[:30])
+
+        time.sleep(.5)
+
+    return df
 
 def main() :
     pass
 
     ##
 
-    # Get the list of all stock ids
-    gdi = GitHubDataRepo(gdu.ids)
-    gdi.clone_overwrite()
+    df = get_all_stock_ids()
 
     ##
-    dfi_fp = gdi.data_fp
-    dfi = pd.read_excel(dfi_fp , dtype = str)
+
+    df[cn.url] = df[c.tse_id].apply(make_adjusted_price_url)
+    df[cn.res_txt] = None
 
     ##
-    dfi[cn.url] = dfi[ns.Col.tse_id].apply(make_adjusted_price_url)
-    dfi[cn.res_txt] = None
+
+    # get ajusted prices, try 10 times
+    for i in range(10) :
+        print(f'\n\t - Round {i} of trying to get adj prices\n')
+        df = get_adj_prices(df)
 
     ##
-    for _ in range(10) :
-        msk = dfi[cn.res_txt].isna()
-        msk |= dfi[cn.res_txt].eq('')
 
-        _df = dfi[msk]
-        print('empty ones:' , len(_df))
-        if _df.empty :
-            break
-
-        for indx , ro in dfi.iterrows() :
-            if not (pd.isna(ro[cn.res_txt]) or ro[cn.res_txt] == '') :
-                continue
-
-            r = requests.get(ro[cn.url] , headers = cte.headers)
-
-            dfi.loc[indx , cn.res_txt] = r.text
-            print(ro[c.ftic] , r.text[:30])
-
-            time.sleep(.5)
-
-        # break
-
-    ##
-    dfi.to_parquet(tfp , index = False)
-
-    ##
-    gdi.rmdir()
+    save_df_as_prq(df , fp.t0)
 
 ##
 if __name__ == "__main__" :
     main()
-    print('\n' , f' *** {Path(__file__).name} Done! *** ' , '\n')

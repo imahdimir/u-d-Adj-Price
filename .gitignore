@@ -1,7 +1,10 @@
 ## Manually add by me
 venv
 .idea
-ns.py
+/temp_data/
+/GitHubData/
+
+
 
 # General
 .DS_Store
@@ -192,14 +195,3 @@ Network Trash Folder
 Temporary Items
 .apdisk
 ~$data.xlsx
-/td-u-d0-FirmTicker-MonthlySales/
-/sales-htmls/
-/Tables/
-/tbl-htp/
-/tbls/
-/rd-Codal-monthly-sales-tables/
-/rd-Codal-monthly-sales-htmls/
-/new/
-/rd-Codal-monthly-sales-raw-html/
-/rd-Codal-monthly-sales-low-size-htmls/
-/rd-Codal-monthly-sales-link-htmls/
