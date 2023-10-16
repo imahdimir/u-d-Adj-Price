@@ -12,9 +12,6 @@ class GDU :
     g = tgdu.GitHubDataUrl()
 
     adj_price_t = g.adj_price
-
-    slf = tgdu.m + 'u-' + adj_price_t
-
     id_2_ftic_s = g.id_2_ftic
 
 class Dirs :
